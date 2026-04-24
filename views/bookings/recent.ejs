@@ -1,0 +1,117 @@
+
+<link rel="stylesheet" href="/CSS/bookingDetails.CSS">
+<style>
+  .cards-row {
+  display: flex;
+  gap: 20px;        /* space between cards on desktop */
+  flex-wrap: wrap;   /* allow wrapping on smaller screens */
+}
+
+/* Each card flex rules */
+.cards-row > div {
+  flex: 1 1 45%;    /* desktop: side-by-side */
+  min-width: 280px;  /* ensures stack on very small screens */
+}
+
+/* DESKTOP: 992px and above */
+@media (min-width: 992px) {
+  .cards-row > div {
+    flex: 1 1 45%;  /* two cards side by side */
+  }
+}
+
+/* TABLET: 768px – 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+  .cards-row > div {
+    flex: 1 1 100%; /* stack cards vertically */
+  }
+}
+
+/* MOBILE: below 768px */
+@media (max-width: 767px) {
+  .cards-row > div {
+    flex: 1 1 100%; /* full width cards */
+  }
+}
+</style>
+
+
+<% if (!booking) { %>
+  <div class="container mt-5">
+    <h2 class="text-danger text-center">No recent booking found 😢</h2>
+  </div>
+<% } else { %>
+
+<div class="container text-center page-wrapper">
+
+  <!-- GO BACK BUTTON -->
+  <a href="/dashboard" class="back-btn"
+     style="display:inline-block; padding:8px 16px; background:#23395d; color:white;
+            text-decoration:none; border-radius:10px; margin-left:10px; margin-bottom:15px;">
+     ← Go Back
+  </a>
+
+  <h1 class="page-title" style="text-align:center;">Recently Added Booking</h1>
+
+  <!-- LEFT RIGHT CARDS -->
+  <div class="cards-wrapper">
+    <div class="cards-row">
+
+      <!-- BOOKING CARD -->
+      <div>
+        <div class="card">
+          <div class="booking-header">📘 Booking Details</div>
+          <div class="card-body text-start">
+            <p><b>Booking ID:</b> <%= booking._id || "N/A" %></p>
+            <p><b>Listing:</b> <%= booking.listingId?.title || "N/A" %></p>
+            <p><b>Location:</b> <%= booking.listingId?.location || "N/A" %></p>
+            <p><b>Check-In:</b> <%= booking.checkIn ? booking.checkIn.toLocaleString() : "N/A" %></p>
+            <p><b>Check-Out:</b> <%= booking.checkOut ? booking.checkOut.toLocaleString() : "N/A" %></p>
+            <p><b>Guests:</b> <%= booking.guests || "N/A" %></p>
+            <p><b>Total Price:</b> ₹ <%= booking.totalPrice || "N/A" %></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- GUEST CARD -->
+      <div>
+        <div class="card">
+          <div class="guest-header">👤 Guest Information</div>
+          <div class="card-body text-start">
+            <p><b>Name:</b> <%= booking.guestName || "N/A" %></p>
+            <hr>
+            <p><b>Email:</b> <%= booking.guestEmail || "N/A" %></p>
+            <hr>
+            <p><b>Phone:</b> <%= booking.guestPhone || "N/A" %></p>
+            <hr>
+            <p><b>Message:</b> <%= booking.message || "N/A" %></p>
+            <hr>
+            <p>Welcome to our hotel! We look forward to hosting you.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PAYMENT CARD FULL WIDTH -->
+  <div class="payment-wrapper">
+    <div class="card payment-card">
+      <div class="payment-title">💳 Payment Status</div>
+
+      <% if (booking.status === "confirmed") { %>
+        <span class="badge bg-success status-pill">Status: Booking Confirmed</span>
+      <% } else if (booking.status === "pending") { %>
+        <span class="badge bg-warning text-dark status-pill">Status: Booking Pending</span>
+      <% } else { %>
+        <span class="badge bg-danger status-pill">Status: Booking Cancelled</span>
+      <% } %>
+
+      <div class="paid-text">
+        <%= booking.isPaid ? "Paid ✔" : "Not paid yet ❌" %>
+      </div>
+    </div>
+  </div>
+
+</div>
+<% } %>

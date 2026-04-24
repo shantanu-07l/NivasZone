@@ -1,0 +1,58 @@
+ 
+<link rel="stylesheet" href="/CSS/profile.CSS">
+
+<a href="/dashboard" class="back-btn"
+     style="display:inline-block; padding:8px 16px; background: #23395d;; color:white; 
+            text-decoration:none; border-radius:10px; margin-left: 10px; margin-bottom:15px;">
+     ← Go Back
+  </a>
+ 
+<div class="profile-page">
+
+  <div class="profile-card shadow">
+
+      <h2 class="text-center mb-4">My Profile</h2>
+      <hr>
+      <form action="/profile" method="POST"  enctype="multipart/form-data" >
+          <!-- Avatar -->
+
+    <div class="avatar-box text-center ">
+        <div class="avatar-wrapper ">
+       <img 
+       src="<%= user.avatar?.url || 'https://i.imgur.com/7yUvePI.png' %>" 
+       class="avatar-img mb-3">
+         <label class="avatar-upload"> 
+         <input type="file" name="avatar" class="form-control"> 📷
+       </label>
+    </div>
+     <!-- <img 
+       src="<%= user.avatar?.url || 'https://i.imgur.com/7yUvePI.png' %>" 
+       class="avatar-img mb-3">
+      <input type="file" name="avatar" class="form-control"> -->
+     </div>
+
+        <div class="mb-3">
+            <label>Name</label>
+            <br>
+            <input name="username" value="<%= user.username %>" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <br>
+            <input name="email" value="<%= user.email %>" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Phone Number</label>
+            <br>
+            <input name="phone" value="<%= user.phone %>" class="form-control">
+        </div>
+
+        <button  type="submit"  class="btn btn-primary w-100 mt-2">
+            Update Profile
+        </button>
+
+      </form>
+  </div>
+</div>

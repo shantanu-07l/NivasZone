@@ -1,0 +1,162 @@
+<% layout("/layouts/boilerplate") %> 
+ <link rel="stylesheet" href="/CSS/show.CSS">
+ <body>
+   <div class="row mt-3">
+    <!-- LEFT: Listing details -->
+     <div class="col-lg-8 col-md-12">
+       <h2><%= listing.title %> </h2> 
+       <div class="card card-listing"> 
+        <!-- Square image --> 
+         <img src="<%= listing.image.url %>"
+          class="card-img-top" 
+          alt="<%= listing.title %> image" 
+          style="width:100%; height:300px; object-fit:cover;"> 
+          <div class="card-body">
+               <p><i>Owned by:
+               <% if(listing.owner) { %>
+                <%= listing.owner.username %>
+                 <% } else { %>
+                  <p>Owner deleted</p>
+                     <% } %></i></p> 
+            <p class="card-text"><b><%= listing.description %></b>  </p>
+             <p class="card-text"> &#8377;<%= Number(listing.price || 0).toLocaleString("en-IN") %>/night</p> 
+            <p class="card-text"><%= listing.location %> </p>
+             <p class="card-text"> <%= listing.country %></p>
+
+             <!-- Buttons side by side -->
+              
+                <% if(currUser && listing.owner && listing.owner._id && listing.owner._id.equals(currUser._id)) { %> 
+                <div class="d-flex gap-2 mt-3"> 
+                  <a href="/listings/<%= listing._id %>/edit" 
+                    class="btn btn-dark">Edit</a>
+                     <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                      <input type="hidden" name="_method" value="DELETE">
+                     <button class="btn btn-danger">Delete</button> 
+                     </form> 
+                    </div>
+             <%}%>
+             </div> 
+            </div> 
+          </div>
+
+<!-- RIGHT: Booking card -->
+  <div class="col-lg-4 col-md-12 mt-3 mt-lg-0">
+    <div class="booking-form card p-3 shadow-sm">
+      <h5>₹<%= listing.price %>/night</h5>
+      <form action="/bookings/create" method="POST">
+        <input type="hidden" name="listingId" value="<%= listing._id %>">
+
+        <div class="mb-2">
+          <label>Check-in</label>
+          <input type="date" name="checkIn" required class="form-control">
+        </div>
+
+        <div class="mb-2">
+          <label>Check-out</label>
+          <input type="date" name="checkOut" required class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label>Guests</label>
+          <input type="number" name="guests" min="1" max="10" required class="form-control">
+        </div>
+       
+        <button 
+           type="submit" 
+           class="btn btn-danger w-100">
+           Reserve</button>
+        
+        <p class="text-muted text-center mt-2">You won’t be charged yet</p>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+          <!-- rating part -->
+           <% if(currUser){%> 
+            <hr/>
+            <div class="col-8 offset-3" > 
+              <h4>Leave a Review</h4> 
+              <form method="POST" action="/listings/<%=listing._id%>/reviews"novalidate 
+                class="needs-validation">
+                  <div class="mt-3 mb-3"> 
+                    <label for="rating"
+                     class="form-label">Rating</label>
+                     <fieldset class="starability-slot"> 
+                      <input type="radio" id="no-rate" 
+                         class="input-no-rate" name="review[rating]" 
+                         value="1" checked aria-label="No rating." />
+                       <input type="radio"
+                        id="first-rate1"
+                         name="review[rating]"
+                        value="1" />
+                        <label for="first-rate1" title="Terrible">1star</label>
+                        <input type="radio" id="first-rate2" 
+                          name="review[rating]" 
+                          value="2" />
+                          <label for="first-rate2" title="Not good">2 stars</label>
+                          <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                          <label for="first-rate3" title="Average">3 stars</label>
+                          <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                          <label for="first-rate4" title="Very good">4 stars</label>
+                          <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                          <label for="first-rate5" title="Amazing">5 stars</label>
+                          </fieldset>
+                         </div>
+
+                    <div> 
+                      <label for="comment" 
+                      class="form-label">Comments</label> 
+                      <textarea name="review[comment]" 
+                      id="comment" cols="30" rows="7" 
+                      class="form-control" required>
+                    </textarea>
+                     <div class="invalid-feedback"> This field is required to fill</div> 
+                      </div> 
+                      <br>
+                   <button class="btn btn-outline-dark">Submit</button>
+                   </form> 
+                   <br> 
+                  </div>
+                  <hr/>
+                   <%}%> 
+                   <!-- Reviews part -->
+     <div class="row justify-content-center"> 
+      <% for(let review of listing.reviews) { %>
+        <div class="card rating-card col-5 mb-3 ms-3">
+          <div class="card-body">
+            <br>
+          <h5>
+          @<%= review.author ? review.author.username : "Deleted User" %>
+           </h5>
+            <p>Rating: <%= review.rating %> ⭐</p>
+            <p><%= review.comment %></p>
+
+            <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+              <button class="btn btn-sm btn-dark">Delete</button>
+            <br><br>
+            </form>
+          </div>
+        </div>
+        
+      <% } %>  
+
+    </div>  
+    <hr/>
+     
+      <!-- MAP SECTION -->
+     <div class="col-8 offset-3 mb-3">
+      <h3>Where you'll be</h3>
+      <div id="map" style="height: 400px street-v12"></div>
+     </div>
+  </div>
+
+
+<script>
+    const mapToken="<%= process.env.MAP_TOKEN %>";
+    const coordinates = <%- JSON.stringify(listing.geometry?.coordinates || [73.810082, 18.660492]) %>;
+    const listing=<%-JSON.stringify(listing)%>;
+</script>
+<script src="/js/map.js"></script>
+</body>

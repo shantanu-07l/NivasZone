@@ -1,0 +1,115 @@
+
+<% layout("/layouts/boilerplate",{page:"auth-page"}) %>
+<link rel="stylesheet" href="/CSS/dashboard.CSS">
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+     
+
+      <ul>
+        <li class="active"><i class="fa-solid fa-house "></i> Dashboard</li>
+        <hr>
+         
+        <a href="/recent " style="text-decoration: none; color: white;">
+          <li><i class="fa-solid fa-list"></i>&nbsp;Recent Added Booking </li>
+        </a>
+        
+
+        <hr>
+         <a href="/profile" style="text-decoration: none; color: white; display:block;  ">
+        <li><i class="fa-solid fa-user"></i> Profile</li>
+        </a>
+
+       <hr>
+       <a href="/logout" style="text-decoration: none; color: white;"> 
+        <li><i class="fa-solid fa-right-from-bracket"></i> Logout</li>
+        </a>
+      </ul>
+  </div>
+
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+
+      <h1 class="welcome">Welcome back 👋 <%= user.username %></h1>
+      <p><b>Track your trips, payments & reviews at one place.</b></p>
+      <br>
+      <!-- STATS -->
+      <div class="cards">
+
+          <div class="card">
+            <i class="fa-solid fa-calendar"></i>
+            <strong>Upcoming Bookings</strong>
+            <h2><%= bookings.length %></h2>
+          </div>
+
+          <div class="card">
+            
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+              <strong>Pending Payments</strong>
+              <p>  
+                Rs: 0 </p>
+                 
+          </div>
+
+          <div class="card">
+               <i class="fa-solid fa-star"></i>
+              <strong>My Reviews</strong>
+              <h2 >8</h2>
+          </div>
+
+          <div class="card">
+            <i class="fa-solid fa-gear"></i>
+           <strong>Account Settings</strong> 
+            <a href="/manage">Manage</a>
+          </div>
+
+      </div>
+
+
+      <!-- RECENT BOOKINGS -->
+
+   <div class="table-box">
+   <h3>Upcoming Reservations</h3>
+
+  <% if(bookings.length === 0){ %>
+    <p>No Upcoming reservations</p>
+  <% } 
+  else { %>
+     <div class="cards-row"> 
+    <% bookings.forEach(booking => { %>
+      <div class="card">
+        <div class="booking-header fs-4 fw-bold">📘 <%= booking.listingId?.title %></div>
+        <hr>
+        <div class="card-body ">
+          <p><b>Check-In:</b> <%= booking.checkIn.toLocaleDateString() %></p>
+          
+          <p><b>Check-Out:</b> <%= booking.checkOut.toLocaleDateString() %></p>
+          <p><b>Guests:</b> <%= booking.guests %></p>
+          <p><b>Total Price:</b> ₹ <%= booking.totalPrice %></p>
+          <p><b>Status:</b> <%= booking.status %></p>
+          <p><b>Guest Name:</b> <%= booking.guestName || "Not provided" %></p>
+        </div>
+        <hr>
+
+        <div class="d-flex justify-content-between gap-2 px-3 pb-3">
+  
+        <a href="/bookings/<%= booking._id %>" class="btn btn-success btn-sm w-50 fw-bold">View Details</a>
+        <form action="/bookings/<%= booking._id %>?_method=DELETE" method="POST" class="w-50">
+          <input type="hidden" name="_method" value="DELETE">
+       <button type="submit" class="btn btn-danger w-100 fw-bold">Delete</button>
+       </form>
+     </div>
+
+      
+        </div>
+    <% }) %>
+    </div>
+  <% } %>
+</div>
+
+</div>
+
+</div>  

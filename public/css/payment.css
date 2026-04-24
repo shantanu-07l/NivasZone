@@ -1,0 +1,86 @@
+/* Reset + Base */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  color: #333;
+}
+
+/* Layout main area (between navbar & footer) */
+main {
+  min-height: calc(100vh - 120px); /* navbar+footer height adjust */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* box top se start hoga */
+  padding: 60px 20px;      /* top margin add */
+}
+
+/* Payment Box */
+.payment-modal {
+  width: 100%;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  margin: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Heading */
+.payment-modal h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ff385c;
+}
+
+/* Payment Method Tabs */
+.btn-group {
+  margin-bottom: 20px;
+}
+
+.btn-group label {
+  font-weight: 500;
+}
+
+/* Form Inputs */
+.payment-form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Buttons */
+.payment-form button {
+  width: 100%;
+  padding: 14px;
+  background: #ff385c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.payment-form button:hover {
+  background: #e03150;
+}
+
+.cancel-btn {
+  margin-top: 10px;
+  background: #ccc !important;
+  color: #333 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .payment-modal {
+    padding: 20px;
+    max-width: 90%;
+  }
+}

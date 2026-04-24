@@ -1,0 +1,26 @@
+.rating-card {
+  width: 100%;              /* full width of container */
+  max-width: 300px;         /* optional limit */
+  aspect-ratio: 1 / 1;      /* ensures square shape */
+  display: flex;
+  flex-direction: column;
+  justify-content:center; 
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  /* margin: 0.5rem auto; */
+  transition: all 0.35s ease;
+  cursor: pointer;
+}
+.rating-card:hover {
+  transform: scale(0.98);
+}
+
+/* Media query for 400–600px screens */
+@media (min-width: 400px) and (max-width: 600px) {
+  .rating-card {
+    max-width: 250px;       /* adjust size for smaller screens */
+    aspect-ratio: 1 / 1;    /* force square */
+    justify-content: center;
+  }
+}

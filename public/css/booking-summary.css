@@ -1,0 +1,42 @@
+ .summary-img {
+  max-width: auto; /* fixed thumbnail size */
+  max-height: 300px;
+  border-radius: 8px;
+  align-items: left;
+}
+
+@media (max-width: 1200px) and (min-width: 765px) {
+.row.g-5.align-items-start {
+    flex-direction: column;       /* stack vertically */
+    align-items: center;  
+    justify-content: center;          /* center align horizontally */
+  }
+
+   .col-md-6, .col-md-5 {
+    width: 90%;                   /* take 90% width */
+    max-width: 600px;        
+     margin: 0 auto;          /* but not more than 600px */
+  }
+
+  .col-md-6 {
+    order: 1; /* left panel first */
+  }
+  .col-md-5 {
+    order: 2; /* right panel second */
+  }
+
+@media (max-width: 600px) {
+  form.d-flex {
+    flex-direction: column;        /* stack vertically */
+    align-items: flex-start;       /* left align */
+  }
+
+  form.d-flex button {
+    margin-top: 0.5rem;            /* spacing below text */
+    align-self: flex-start;        /* button under text */
+    padding: 0.4rem 0.8rem;        /* smaller button */
+    font-size: 0.85rem;
+  }
+}
+  
+}

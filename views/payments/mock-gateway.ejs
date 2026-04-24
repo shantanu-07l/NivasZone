@@ -1,0 +1,63 @@
+ <% layout("/layouts/boilerplate") %>
+<link rel="stylesheet" href="/CSS/payment.CSS" />
+
+<div class="payment-modal">
+  <h2>🔐 Secure Payment Portal</h2>
+  <p>Booking ID: <%= bookingId %></p>
+  <p>Amount: ₹<%= amount %></p>
+
+  
+<div class="btn-group w-100 mb-3" role="group" aria-label="Payment Method">
+  <input type="radio" class="btn-check" name="paymentMethod" id="cardOption" autocomplete="off" checked>
+  <label class="btn btn-outline-danger" for="cardOption">Credit/Debit Card</label>
+
+  <input type="radio" class="btn-check" name="paymentMethod" id="upiOption" autocomplete="off">
+  <label class="btn btn-outline-secondary" for="upiOption">UPI</label>
+</div>
+
+  <!-- Card Form -->
+  <div id="cardForm" class="payment-form">
+    <form action="/payments/mock-success" method="POST">
+      <input type="hidden" name="bookingId" value="<%= bookingId %>" />
+      <input type="hidden" name="amount" value="<%= amount %>" />
+      <input type="text" name="cardNumber" placeholder="Card Number" required/>
+      <input type="text" placeholder="MM / YY" required/>
+      <input type="text" placeholder="CVV" required/>
+      <button type="submit" >Pay INR <%= amount %></button>
+    </form>
+    <form action="/payments/mock-failure" method="POST">
+      <input type="hidden" name="bookingId" value="<%= bookingId %>" />
+      <input type="hidden" name="amount" value="<%= amount %>" />
+      <button type="submit" class="cancel-btn ">Cancel</button>
+    </form>
+  </div>
+
+  <!-- UPI Form -->
+  <div id="upiForm" class="payment-form" style="display:none;">
+    <form action="/payments/mock-success" method="POST">
+      <input type="hidden" name="bookingId" value="<%= bookingId %>" />
+      <input type="hidden" name="amount" value="<%= amount %>" />
+      <input type="text" name="upiId" placeholder="Enter UPI ID" required />
+      <button type="submit">Pay INR <%= amount %></button>
+    </form>
+    <form action="/payments/mock-failure" method="POST">
+      <input type="hidden" name="bookingId" value="<%= bookingId %>" />
+      <input type="hidden" name="amount" value="<%= amount %>" />
+      <button type="submit" class="cancel-btn">Cancel</button>
+    </form>
+  </div>
+</div>
+
+
+<script>
+document.getElementById("cardOption").addEventListener("change", () => {
+  document.getElementById("cardForm").style.display = "block";
+  document.getElementById("upiForm").style.display = "none";
+});
+
+document.getElementById("upiOption").addEventListener("change", () => {
+  document.getElementById("cardForm").style.display = "none";
+  document.getElementById("upiForm").style.display = "block";
+});
+
+</script>

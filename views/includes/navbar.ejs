@@ -1,0 +1,101 @@
+<link rel="stylesheet" href="/css/navbar.css">
+<!--Main code-->
+
+<nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top">
+  <div class="container-fluid d-flex align-items-center">
+
+    <!-- LEFT: Logo -->
+      <div class="d-flex align-items-center"> 
+      <a class="navbar-brand" href="/listings">
+      <i class="fa-regular fa-compass"></i>
+       </a> <!-- Explore -->
+        <a class="nav-link explore-link" href="/listings">
+          Explore
+         </a>
+   </div>
+     <!-- CENTER: Search -->
+     <form class="   search-bar mx-auto navbar-search" 
+     action="/listings/search"
+     method="GET">
+        <input class="form-control me-2 dest"
+         type="text"
+         name="q" 
+         placeholder="Search destinations" required>
+        <div class="search d-flex">
+         <button class="btn nav-btn  d-flex align-items-center " type="submit">
+         <i class="fa-solid fa-magnifying-glass"></i>
+         <p>Search</p>
+         </button>
+      </div>
+     </form>
+
+     <!-- TOGGLER -->
+  <button class="navbar-toggler ms-auto" type="button"
+       data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar">
+
+    <span class="navbar-toggler-icon"></span>
+  </button>
+ 
+ <!-- RIGHT LINKS (desktop) -->
+<div class="collapse navbar-collapse" id="navbarContent"> 
+       <div class="navbar-nav d-flex align-items-center ms-auto gap-3">
+          <a class="nav-link text" href="/listings/new">Airbnb your home</a>
+        <%if(!currUser){%>
+         <a class="nav-link" href="/signup"><b>Signup</b></a>
+         <a class="nav-link" href="/login"><b>Login</b></a>
+       <% }%>
+           <%if(currUser){%>
+              <a class="nav-link d-none d-lg-block" href="/dashboard"  ><b>Dashboard</b></a>
+              <a class="nav-link" href="/logout"><b>Logout</b></a>
+        <% }%>
+      </div> 
+     </div>
+  </div>
+</nav>
+
+
+<!-- OFFCANVAS MENU (mobile) -->
+<div class="offcanvas offcanvas-end bg-white" tabindex="-1" id="offcanvasNavbar">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Menu</h5>
+    
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+
+  <div class="offcanvas-body">
+   <!-- Search (mobile only) -->
+    <form class="mobile-search mb-3"  
+    action="/listings/search" method="GET">
+      <input class="form-control me-2 dest" 
+      type="text" 
+      name="q"
+      placeholder="Search destinations"
+      required>
+      <button class="btn nav-btn d-flex align-items-center" type="submit">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <p>Search</p>
+      </button>
+    </form>
+
+  
+        <!-- Links -->
+    <div class="navbar-nav d-flex flex-column gap-3">
+      <a class="nav-link text" href="/listings/new"><b>Airbnb your home</b></a>
+      <% if (!currUser) { %>
+        <a class="nav-link" href="/signup"><b>Signup</b></a>
+        <a class="nav-link" href="/login"><b>Login</b></a>
+      <% } %>
+      <% if (currUser) { %>
+         <!-- <a class="nav-link d-lg-none" href="/dashboard"><b>Dashboard</b></a>
+         <a class="nav-link" href="/logout"><b>Logout</b></a> -->
+          <a class="nav-link" href="/dashboard"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a class="nav-link" href="/recent"><i class="fa-solid fa-list"></i> Recent Added Booking</a>
+        <a class="nav-link" href="/profile"><i class="fa-solid fa-user"></i> Profile</a>
+        <a class="nav-link" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+      <% } %>
+    </div>
+  </div>
+</div>

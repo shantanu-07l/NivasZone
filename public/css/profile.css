@@ -1,0 +1,219 @@
+
+ body{
+   background-color:#e6def4; 
+  
+}
+
+ .profile-page{
+    /* min-height:70vh;  */
+    /* margin-top: 1rem; */
+    margin-bottom: 1rem;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:center;
+     /* background: linear-gradient(120deg, #5fa8ff,#b86bff,#ff6ec7);  */
+     box-sizing: border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* BIG GLASS CARD */
+ .profile-card{
+    width: 600px;
+    padding: 15px 20px;
+    border-radius: 18px;
+    box-sizing: border-box;
+    margin: auto;        
+     margin-bottom: 1rem;
+     backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(18px);
+    border:1px solid rgba(255,255,255,0.35);
+    box-shadow:0 25px 60px rgba(0,0,0,0.25);
+}
+
+ 
+.profile-card h2{
+    text-align:center;
+    padding:28px;
+    margin:0;
+    font-size:34px;
+    font-weight:700;
+    color:#2d2d2d;
+    /* background: linear-gradient(90deg,#7ecbff,#ff79c6); */
+}
+
+ 
+.profile-card form{
+    padding:30px 45px 40px 45px;
+}
+
+
+ 
+.mb-3{
+    background: rgba(255,255,255,0.25);
+    padding:14px;
+    border-radius:16px;
+    margin-top:18px;
+    border:1px solid rgba(255,255,255,0.3);
+}
+
+
+.profile-card label{
+    font-weight:600;
+    color:#333;
+}
+ 
+.profile-card input{
+    border:none !important;
+    border-radius:12px !important;
+    padding:10px;
+    background: rgba(255,255,255,0.85) !important;
+    margin-top:6px;
+}
+ 
+.profile-card button{
+    margin-top:25px;
+    padding:13px;
+    border:none;
+    border-radius:14px;
+    font-size:18px;
+    font-weight:600;
+    background: linear-gradient(90deg,#3d8bff,#1f64e0);
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    transition:.3s;
+}
+
+.profile-card button:hover{
+    transform:scale(1.04);
+}  
+
+
+
+/* AVATAR WRAPPER */
+.avatar-wrapper{
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 10px auto 80px auto;
+}
+
+/* PROFILE IMAGE */
+.avatar-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+
+  border: 5px solid rgba(255,255,255,0.35);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+
+  background: white;
+}
+
+/* HIDE REAL FILE INPUT */
+.avatar-wrapper input{
+  display: none;
+}
+
+/* CAMERA BUTTON */
+.avatar-upload{
+  position: absolute;
+  bottom: -30px;
+  right: -45px;
+ 
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+
+  background: linear-gradient(135deg,#4facfe,#0061ff); 
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  cursor: pointer;
+
+  border: 3px solid white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+  transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.avatar-upload:hover{
+  transform: scale(1.1);
+}
+/* .profile-card shadow{
+ background: linear-gradient(90deg,#7ecbff,#ff79c6);
+} */
+ .profile-card form button {
+  display: block;
+  margin: 0 auto;   /* center horizontally */
+  width: 200px;     /* fixed width so it doesn’t stretch */
+  margin-top: 1rem;
+}
+ 
+.auth-page .navbar{
+  background:#f6f6f6 !important;
+  box-shadow:none !important;
+  border-bottom:none !important;
+}
+.auth-page .navbar .nav-link,
+.auth-page .navbar .navbar-brand{
+    color: black !important;
+}
+
+.auth-page .navbar .nav-link:hover{
+    color: #120909 !important;
+}
+
+@media screen and (max-width: 600px) {
+    .profile-page {
+        justify-content: center; /* ensures vertical center */
+        padding: 15px 10px;
+    }
+
+    .profile-card {
+        padding: 12px 15px;
+        width: 100%;
+        max-width: 360px;
+    }
+
+    .avatar-wrapper {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 15px;
+    }
+
+    .profile-card h2 {
+        font-size: 18px;
+        padding: 12px 0;
+    }
+
+    .profile-card form {
+        padding: 10px;
+    }
+
+    .mb-3 {
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 12px;
+    }
+
+    .avatar-upload {
+        bottom: -16px;
+        right: -24px;
+        width: 26px;
+        height: 26px;
+        font-size: 13px;
+    }
+
+    .profile-card button {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        margin-top: 0.8rem;
+    }
+}

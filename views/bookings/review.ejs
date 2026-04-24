@@ -1,0 +1,137 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+    .custom-img{
+    height: 250px;      /* jo height chahiye */
+    width: 100%;
+    object-fit: cover;  /* image crop ho jayegi but stretch nahi hogi */
+    border-radius: 20px; /* optional */
+}
+
+
+/* ===================================== */
+/* FINAL TABLET ALIGNMENT FIX 768–990px  */
+/* ===================================== */
+
+@media (min-width:768px) and (max-width:990px){
+
+  /* container ko left shift karo */
+  .container{
+    max-width:95% !important;
+    margin-left:20px !important;
+    margin-right:20px !important;
+  }
+
+  .booking-wrapper{
+    display:flex !important;
+    gap:28px;
+    align-items:flex-start;
+    justify-content:flex-start;   /* CENTER hataya */
+  }
+
+  /* LEFT SIDE WIDER */
+  .left-column{
+    flex:0 0 60%;
+    max-width:60%;
+  }
+
+  /* RIGHT CARD LESS NARROW */
+  .right-column{
+    flex:0 0 40%;
+    max-width:40%;
+  }
+
+  /* right card full width inside column */
+  .price-card{
+    width:100%;
+    position:static !important;
+  }
+
+  /* card thoda bada feel */
+  .price-card .card{
+    padding:24px;
+    border-radius:18px;
+  }
+
+  /* left confirm button hide */
+  .confirm-btn-left{
+    display:none !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+</style>
+<form  action="/bookings/confirm-booking" method="POST">
+<div class="container py-5">
+  <h1 class="text-center mb-5 fw-bold">Review Your Reservation</h1>
+
+  <div class="row g-5">
+    
+    <!-- LEFT SIDE -->
+    <div class="col-md-7">
+      <!-- Trip Details -->
+
+      <div class="card shadow rounded-5 p-4 mb-4">
+        <h3>Trip Details</h3>
+        <hr>
+
+        <p><b>Check-in:</b> <%= booking.checkIn.toDateString() %></p>
+        <p><b>Check-out:</b> <%= booking.checkOut.toDateString() %></p>
+        <p><b>Guests:</b> <%= booking.guests %></p>
+        <p><b>Total nights:</b> <%= nights %></p>
+      </div>
+         <!-- Guest Info -->
+
+      <div class="card shadow rounded-5 p-4">
+        <h3>Guest Information</h3>
+        <hr>
+
+        <input class="form-control mb-3 " name="guestName" placeholder="Full Name" required>
+        <input class="form-control mb-3" name="guestEmail"  placeholder="Email" required>
+        <input class="form-control mb-3"  name="guestPhone"  placeholder="Phone Number"required>
+        <textarea class="form-control"  name="message"   placeholder="Message to host (optional)"></textarea>
+
+        <div class="form-check mt-4">
+          <input class="form-check-input" type="checkbox" required>
+          <label class="form-check-label">
+            I agree to house rules & cancellation policy
+          </label>
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="col-md-5">
+      <div class="card shadow rounded-5 p-4">
+
+        <img src="<%= booking.listingId.image.url %>" class="img-fluid  custom-img   rounded-4 mb-3">
+
+        <h4><%= booking.listingId.title %></h4>
+        <hr>
+
+        <p>₹<%= booking.listingId.price %> × <%= nights %> nights</p>
+        <p>Service fee: ₹<%= serviceFee %></p>
+
+        <hr>
+        <h4>Total: ₹<%= total %></h4>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CONFIRM & PAY BUTTON -->
+   
+    <input type="hidden" name="bookingId" value="<%= booking._id %>">
+    <button class="btn btn-danger w-100 mt-5 p-3 fs-3 rounded-4" >
+      Continue
+    </button>
+</div>
+ </form>

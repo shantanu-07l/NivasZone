@@ -1,0 +1,338 @@
+body{
+  margin:0;
+  background:#f1f5f9;
+  font-family:'Segoe UI',sans-serif;
+}
+
+/* layout */
+.dashboard{
+  display:flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:260px;
+  height:100vh;
+  position:fixed;
+  top:60px;
+  left:0;
+  z-index: 1000;
+
+  background:#1e293b;
+  color:white;
+  padding:30px 20px;
+   
+}
+
+.logo{
+  margin-bottom:40px;
+  font-weight:bold;
+}
+
+.sidebar ul{
+  list-style:none;
+  padding:0;
+}
+
+.sidebar li{
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:12px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.sidebar li:hover,
+.sidebar .active{
+  background:#3b82f6;
+}
+
+/* MAIN CONTENT */
+.content{
+  margin-left:260px;
+  padding:40px 30px;
+  
+  /* width:100%; */
+  /* changes */
+  min-height: 100vh;
+ 
+   width: calc(100% - 260px);
+  box-sizing: border-box;
+}
+
+.welcome{
+  margin-bottom:30px;
+}
+
+/* CARDS */
+.cards{
+  display:flex;
+  gap:25px;
+  margin-bottom:40px;
+  
+}
+
+.card{
+  flex:1;
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+   text-align: center;
+}
+
+
+.card p{
+  color:gray;
+}
+
+.card h2{
+  font-size:32px;
+}
+
+/* TABLE */
+.table-box{
+  background:white;
+  padding:25px 25px;
+  border-radius:15px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+
+                   
+  width:100%;  
+    /* width: 98%;      
+  margin: 0 auto;  */
+  box-sizing: border-box; 
+   overflow-x: hidden;  
+
+ 
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+  
+}
+
+th,td{
+  padding:15px;
+  border-bottom:1px solid #eee;
+}
+
+/* .success{
+  background:#dcfce7;
+  color:#16a34a;
+  padding:5px 10px;
+  border-radius:20px;
+} */
+
+.pending{
+  background:#fef3c7;
+  color:#d97706;
+  padding:5px 10px;
+  border-radius:20px;
+}
+.cards i{
+  font-size: 1.5rem;
+  color:#1e293b;
+   display: block;
+  margin-bottom: 15px; 
+  align-self: center;
+   transition: transform 0.3s ease, color 0.3s ease;
+}
+ 
+.card:hover i {
+  transform: scale(1.2);       /* thoda zoom */
+  color: #3b82f6;              /* accent color change */
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.03); /* thoda zoom bhi hoga */
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+.table-box .cards-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.table-box .cards-row .card{
+  flex: 0 1 calc((100% - 40px) / 3);  /* each card min width 300px, grow if space */
+  min-width: 250px;   
+ }  
+
+.table-box{
+ padding-left: 30px;
+}
+.card-body{
+  text-align: left;
+} 
+.auth-page .navbar{
+  background:#EBEBEB !important;
+  box-shadow:none !important;
+  border-bottom:none !important;
+}
+.auth-page .navbar .nav-link,
+.auth-page .navbar .navbar-brand{
+    color: black !important;
+}
+
+.auth-page .navbar .nav-link:hover{
+    color: #120909 !important;
+}
+
+/* ================= TABLET ================= */
+@media (max-width:1024px){
+
+  .sidebar{
+    width:220px;
+  }
+
+  .content{
+    margin-left:220px;
+    width: calc(100% - 220px);
+    padding:30px 20px;
+  }
+
+  /* top stat cards → 2 per row */
+  .cards{
+    flex-wrap:wrap;
+  }
+
+  .cards .card{
+    flex: 0 1 calc(50% - 15px);
+  }
+
+  /* booking cards → 2 per row */
+  .table-box .cards-row .card{
+    flex: 0 1 calc(50% - 15px);
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width:768px){
+
+  /* sidebar becomes top bar */
+  .sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+    top:0;
+    display:flex;
+    justify-content:center;
+    padding:15px;
+  }
+
+  .sidebar ul{
+    display:flex;
+    gap:15px;
+    align-items:center;
+  }
+
+  .sidebar li{
+    margin:0;
+    padding:10px 14px;
+    font-size:14px;
+  }
+
+  /* content full width */
+  .content{
+    margin-left:0;
+    width:100%;
+    padding:20px 15px;
+  }
+
+  .welcome{
+    font-size:22px;
+  }
+
+  /* stat cards single column */
+  .cards{
+    flex-direction:column;
+  }
+
+  .cards .card{
+    width:100%;
+  }
+
+  /* booking cards single column */
+  .table-box .cards-row{
+    flex-direction:column;
+  }
+
+  .table-box .cards-row .card{
+    width:100%;
+  }
+
+}
+
+/* ============== SMALL MOBILE ============== */
+@media (max-width:480px){
+
+  .sidebar ul{
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .sidebar li{
+    font-size:12px;
+    padding:8px 10px;
+  }
+
+  .card h2{
+    font-size:26px;
+  }
+
+  .table-box{
+    padding:18px;
+  }
+}
+
+/* 💻 LAPTOP SCREENS */
+@media (min-width:1025px) and (max-width:1440px){
+
+  /* Sidebar thodi slim */
+  .sidebar{
+    width:220px;
+  }
+
+  .content{
+    margin-left:220px;
+    width:calc(100% - 220px);
+    padding:30px 25px;
+  }
+
+  /* Top stats cards */
+  .cards{
+    gap:20px;
+  }
+
+  .cards .card{
+    min-height:140px;
+    padding:20px;
+  }
+
+  /* Booking cards → 2 per row (3 tight lagte hain laptop me) */
+  .table-box .cards-row .card{
+    flex: 0 1 calc((100% - 20px) / 2);
+  }
+
+}
+
+/* 🖥️ LARGE DESKTOP */
+@media (min-width:1441px){
+
+  .table-box .cards-row .card{
+    flex: 0 1 calc((100% - 40px) / 3);
+  }
+
+}
+@media (max-width: 775px) {
+  .sidebar {
+    display: none; /* Hide sidebar on small screens */
+  }
+}

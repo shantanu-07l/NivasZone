@@ -1,0 +1,75 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    body {
+        background-color: #f4f6f9;
+    }
+
+    .auth-card {
+        width: 480px;
+        padding: 30px;
+        border-radius: 12px;
+        background: white;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        min-height: 420px;
+    }
+
+    .toggle-btns .btn {
+        width: 50%;
+        border-radius: 8px;
+        margin: 0 5px;
+    }
+
+    .active-btn {
+        background-color: #3b82f6;
+        color: white;
+    }
+
+    .form-control {
+        height: 45px;
+        border-radius: 8px;
+    }
+
+    .main-btn {
+        height: 45px;
+        border-radius: 8px;
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+
+    <div class="auth-card">
+
+        <h3 class="text-center">Welcome Back</h3>
+        <p class="text-center text-muted mb-4">Sign in to continue your journey</p>
+
+        <!-- Toggle Buttons -->
+        <div class="d-flex mb-4 toggle-btns justify-content-between">
+            <a href="/login" class="btn active-btn">Login</a>
+            <a href="/signup" class="btn btn-outline-primary">Sign Up</a>
+        </div>
+
+        <form action="/login" method="POST">
+
+            <div class="mb-3">
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+            </div>
+
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <div>
+                <a href="/forget-password">forget password ?</a>
+            </div>
+            <br/>
+
+            <button class="btn main-btn w-100">Sign In</button>
+
+        </form>
+
+    </div>
+
+</div>

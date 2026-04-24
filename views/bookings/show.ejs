@@ -1,0 +1,133 @@
+ 
+<link rel="stylesheet" href="/CSS/bookingDetails.CSS">
+<style>
+  /* GENERAL STYLES */
+ /* CONTAINER & PAGE STYLING */
+ .cards-row {
+  display: flex;
+  gap: 20px;        /* space between cards on desktop */
+  flex-wrap: wrap;   /* allow wrapping on smaller screens */
+}
+   .payment-status-box{
+   display:flex;
+   flex-direction:column;   /* makes them vertical */
+   align-items:center;      /* center horizontally */
+   gap:8px;                 /* space between lines */
+   margin-top:10px;
+}
+
+/* Each card flex rules */
+.cards-row > div {
+  flex: 1 1 45%;    /* desktop: side-by-side */
+  min-width: 280px;  /* ensures stack on very small screens */
+}
+
+/* DESKTOP: 992px and above */
+@media (min-width: 992px) {
+  .cards-row > div {
+    flex: 1 1 45%;  /* two cards side by side */
+  }
+}
+
+/* TABLET: 768px – 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+  .cards-row > div {
+    flex: 1 1 100%; /* stack cards vertically */
+  }
+}
+
+/* MOBILE: below 768px */
+@media (max-width: 767px) {
+  .cards-row > div {
+    flex: 1 1 100%; /* full width cards */
+  }
+}
+</style>
+
+
+
+
+
+
+
+<% if (!booking) { %>
+  <div class="container mt-5">
+    <h2 class="text-danger text-center">Booking not found 😢</h2>
+  </div>
+<% } else { %>
+<% } %>
+
+
+<div class="container  text-center  page-wrapper">
+     
+  <!-- GO BACK BUTTON -->
+  <a href="/dashboard" class="back-btn"
+     style="display:inline-block; padding:8px 16px; background: #23395d;; color:white; 
+            text-decoration:none; border-radius:10px; margin-left: 10px; margin-bottom:15px;">
+     ← Go Back
+  </a>
+
+  <h1 class="page-title" style="text-align: center;">My Booking</h1>
+  <!-- LEFT RIGHT CARDS -->
+   <div class="cards-wrapper"> 
+     <div class="cards-row">
+
+
+    <!-- BOOKING CARD -->
+    <div>
+      <div class="card booking">
+        <div class="booking-header">📘 Booking Details</div>
+        <div class="card-body text-start">
+          <p>📅 <b>Bookingid:</b> <%= booking._id %></p>
+          <p>📍 <b>Listing:</b> <%= booking.listingId?.title %></p>
+          <p>📍 <b>Location:</b> <%= booking.listingId?.location %></p>
+          <p>📆 <b>Check-In:</b> <%= booking.checkIn.toLocaleString() %></p>
+          <p>🗓️ <b>Check-Out:</b> <%= booking.checkOut.toLocaleString() %></p>
+          <p>👤 <b>Guests:</b> <%= booking.guests %></p>
+          <p>💸 <b>Total Price:</b> ₹ <%= booking.totalPrice %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- GUEST CARD -->
+    <div>
+      <div class="card">
+        <div class="guest-header">👤 Guest Information</div>
+        <div class="card-body text-start">
+          <p>👤 <b>Name:</b> <%= booking.guestName %></p>
+          <hr>
+          <p>✉️ <b>Email:</b> <%= booking.guestEmail %></p>
+          <hr>
+          <p>📞 <b>Phone:</b> <%= booking.guestPhone %></p>
+          <hr>
+          <p>💬 <b>Message:</b> <%= booking.message %></p>
+          <hr>
+           <p><b></b> Welcome to our hotel! We look forward to hosting you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- PAYMENT CARD FULL WIDTH -->
+   <div class="payment-wrapper"> 
+   <div class="card payment-card">
+    <div class="payment-title">💳 Payment Status</div>
+
+   <% if (booking.isPaid ) { %>
+    <div class="payment-status-box">
+        <span class="badge bg-success status-pill">Paid ✔</span>
+        <span class="badge bg-success mt-2">Booking Confirmed</span>
+    </div>
+       
+    <% } else { %>
+       <div class="payment-status-box"> 
+      <span class="badge bg-danger status-pill">Not Paid ❌</span>
+      <span class="badge bg-danger mt-2">Booking Cancelled</span>
+    </div>
+      <% } %>
+  </div>
+ </div>
+
+
+</div>

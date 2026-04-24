@@ -1,0 +1,94 @@
+<!-- 
+<% if(success && success.length){%>
+    <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert" >
+        <%= success %>
+        <button class=" btn-close" type="button" data-bs-dismiss="alert" aria-lable="close"></button>
+    </div>
+<% } %>
+
+<% if(error && error.length){ %>
+    <div class="alert alert-danger alert-dismissible fade show col-6 offset-3" role="alert" >
+        <%= error %>
+        <button class=" btn-close" type="button" data-bs-dismiss="alert" aria-lable="close"></button>
+    </div>
+<% } %>
+
+ -->
+<style>
+  .flash-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .flash-box {
+    width: 500px; /* 🔥 bigger width */
+    padding: 18px 25px; /* 🔥 more spacing */
+    border-radius: 12px;
+    font-size: 18px; /* 🔥 bigger text */
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: fadeSlide 0.4s ease;
+  }
+
+  .flash-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .flash-error {
+    background-color: #f8d7da;
+    color: #842029;
+  }
+
+  .close-btn {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<% if(success && success.length > 0){ %>
+  <div class="flash-container">
+    <% success.forEach(msg => { %>
+      <div class="flash-box flash-success">
+        <span>✅ <%= msg %></span>
+        <span class="close-btn" onclick="this.parentElement.remove()">✖</span>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<% if(error && error.length > 0){ %>
+  <div class="flash-container">
+    <% error.forEach(msg => { %>
+      <div class="flash-box flash-error">
+        <span>❌ <%= msg %></span>
+        <span class="close-btn" onclick="this.parentElement.remove()">✖</span>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<script>
+  setTimeout(() => {
+    document.querySelectorAll(".flash-box").forEach(el => {
+      el.remove();
+    });
+  }, 10000);
+</script>

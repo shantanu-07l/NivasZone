@@ -1,0 +1,127 @@
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f9ff; /* uniform background */
+  display: flex;
+  justify-content: center;   /* horizontal center */
+  align-items: center;       /* vertical center */
+  min-height: 100vh;         /* full viewport height */
+}
+
+.failure-box {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+  margin: auto;              /* ensures center alignment */
+}
+.failure-box {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 90%;
+  min-height: 60vh; 
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+}
+
+.failure-box h2 {
+  font-size: 32px;
+  color: #d32f2f;
+  margin-bottom: 20px;
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.failure-box p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;   /* stack vertically */
+  align-items: center;      /* center horizontally */
+  gap: 12px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+  width: 100%;              /* full width on small screens */
+  max-width: 250px;         /* limit width for larger screens */
+  text-align: center;
+}
+
+/* Button colors */
+.retry-btn { background: #d32f2f; color: #fff; }
+.retry-btn:hover { background: #b71c1c; }
+
+.back-btn { background: #23395d; color: #fff; }
+.back-btn:hover { background: #1a2a45; }
+
+.dashboard-btn { background: #4caf50; color: #fff; }
+.dashboard-btn:hover { background: #388e3c; }
+
+/* Tablet responsiveness */
+@media (max-width: 1024px) {
+  .failure-box {
+    padding: 32px 24px;
+    width: 95%;
+  }
+  .failure-box h2 { font-size: 24px; }
+  .failure-box p { font-size: 15px; }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .failure-box {
+    padding: 24px 16px;
+    width: 95%;
+          /* extra height for mobile */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* content vertically centered */
+  }
+   .failure-box h2 {
+    font-size: 28px;             /* slightly smaller on mobile */
+  }
+
+}
+
+</style>
+
+
+
+<div class="failure-box">
+  <h2>❌ Payment Failed</h2>
+  <p>There was an issue with your payment.</p>
+  
+  <div class="actions">
+    <!-- Retry button -->
+    <a href="/bookings/booking-summary/<%= bookingId %>" 
+       class="btn retry-btn">Try Again</a>
+    
+    <!-- Back to payment gateway button -->
+    <a href="/payments/mock-gateway?bookingId=<%= bookingId %>&amount=<%= booking.totalPrice %>" 
+       class="btn back-btn">← Go Back</a>
+    
+    <!-- Optional: Go to dashboard -->
+    <a href="/dashboard" class="btn dashboard-btn">Go to Dashboard</a>
+  </div>
+</div>

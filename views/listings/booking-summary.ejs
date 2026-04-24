@@ -1,0 +1,151 @@
+<% layout("/layouts/boilerplate") %> 
+<link rel="stylesheet" href="/CSS/bookīng-summary.CSS">
+ 
+ <body>
+<div class="container py-4">
+  <div class="row  g-5 align-items-start">
+    <!-- Right Summary -->
+    <div class="col-md-5 order-md-1 py-5">
+      <!-- <p class="fw-bold fs-1 mt-1">Request to book</p>  -->
+      <!-- <h1>Request to book</h1> -->
+      <div class="card shadow-sm p-3 rounded-5">
+         <div class="d-flex align-items-center mb-3">
+      <!-- Image Left -->
+      <img src="<%= listing.image.url %>"  
+           alt="Listing preview"  
+           class="img-fluid rounded-3 me-3"  
+           style="width: 120px; height: auto;">
+      
+      <!-- Title Right -->
+      <div>
+        <h3 class="fw-bold mb-1"><%= listing.title %></h3>
+        <p>⭐<b>4.55(49)</b></p>
+      </div>
+    </div>
+        <div class="card-body">
+          <p class="text-danger">This reservation is non-refundable. <a href="#">Full policy</a></p>
+             <hr>
+           
+              <div class="d-flex align-items-center">
+                <p><b>Dates</b></p>
+                <form action="/bookings/update/<%= booking._id %>" method="POST" class="ms-auto ">
+                 <input type="date" name="checkIn" value="<%= booking.checkIn.toISOString().split('T')[0] %>" required />
+                  <input type="date" name="checkOut" value="<%= booking.checkOut.toISOString().split('T')[0] %>" required />
+                  <input type="hidden" name="guests" value="<%= guests %>" />
+                  <button id="changeBtn"  type="submit" class="btn btn-success btn-sm ms-auto rounded-3">Update</button>
+                </form>
+           </div>
+           <p id="datesText"><%= checkIn %> – <%= checkOut %></p>
+          <input type="text" id="datePicker" style="display:none;" />
+          <hr>
+          <div class="d-flex align-items-center">
+          <p><strong>Guests</strong> </p>
+              <form action="/bookings/update/<%= booking._id %>" method="POST" class="ms-auto">
+                <input type="number" name="guests" min="1" max="10" required class="form-control" value="<%= guests %>" />
+                <input type="hidden" name="checkIn" value="<%= booking.checkIn.toISOString().split('T')[0] %>" />
+               <input type="hidden" name="checkOut" value="<%= booking.checkOut.toISOString().split('T')[0] %>" />
+              <button  id="guestChangeBtn"  type="submit" class="btn btn-success btn-sm ms-auto rounded-3">Update</button>
+             </form>
+           </div>
+          <p id="guestsText"><%= guests %> guests</p>
+          <input type="number" id="guestInput" min="1" max="10" value="<%= guests %>" style="display:none;" />
+          <hr>
+          <h5>Price details</h5>
+          <p><%= nights %> nights × ₹<%= pricePerNight.toFixed(2) %> = ₹<%= subtotal.toFixed(2) %></p>
+          <p>Taxes = ₹<%= taxes.toFixed(2) %></p>
+          <hr>
+          <p><strong>Total INR:</strong> ₹<%= total.toFixed(2) %></p>
+        </div>
+      </div>
+    </div>
+
+
+ 
+ <!-- left panel -->
+ <div class="col-md-6 order-md-2"> 
+  <br> 
+<p class="fw-bold fs-1 mt-1">Request to book</p> 
+ <!-- <h1>Request to book</h1> -->
+ <div class="container py-4"> 
+
+   <!-- Step 2 -->
+   <div class="card shadow rounded-5 p-5 mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="fw-bold fs-3"><i class="fa-solid fa-square-check"></i>&nbsp; Review your reservation</span>
+       <a href="/bookings/review/<%= booking._id %>" 
+       class="btn btn-danger btn-lg rounded-4">
+       Continue
+       </a>
+      <!-- <button class="btn btn-danger btn-lg rounded-4">Confirm Booking</button> -->
+    </div>
+  </div>
+
+
+<!--step 3-->
+<div class="card shadow rounded-5 p-5 mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+     <form action="/payments/mock-checkout" method="POST"  class="d-flex justify-content-between align-items-center" >
+      <input type="hidden" name="bookingId" value="<%= booking._id %>" />
+      <input type="hidden" name="amount" value="<%= total.toFixed(2) %>" />
+     
+      
+      <span class="fw-bold fs-3"><i class="fa-solid fa-credit-card"></i> &nbsp;Add a Payment method</span>
+      
+      <button type="submit" class="btn btn-danger btn-lg rounded-4">Add Payment</button>
+    </form> 
+    </div>  
+   </div>  
+
+
+
+
+
+
+
+  <p class="text-muted small mt-3 ms-3">
+🔒 Secure payment powered by Wanderlust
+</p>
+</div>
+</div>
+ 
+</div>
+</div>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+ 
+<script>
+  const picker = flatpickr("#datePicker", {
+  mode: "range",
+  dateFormat: "d M Y",
+  onClose: function(selectedDates, dateStr) {
+    if (dateStr) {
+      document.getElementById("datesText").innerText = dateStr;
+    }
+    document.getElementById("datePicker").style.display = "none";
+  }
+});
+// Show calendar when Change clicked
+  document.getElementById("changeBtn").addEventListener("click", () => {
+  document.getElementById("datePicker").style.display = "block";
+  picker.open(); // directly open calendar
+});
+
+
+
+document.getElementById("guestChangeBtn").addEventListener("click", () => {
+  const guestInput = document.getElementById("guestInput");
+  guestInput.style.display = "block";
+  guestInput.focus();
+
+  guestInput.addEventListener("change", () => {
+    document.getElementById("guestsText").innerText = guestInput.value + " guests";
+    guestInput.style.display = "none";
+  });
+});
+
+</script>
+
+</body>

@@ -1,0 +1,318 @@
+<% layout("/layouts/boilerplate")%>
+<style>
+    
+  .filters-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* arrows */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  border: none;
+  background: white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.scroll-btn.left {
+  left: 5px;
+}
+
+.scroll-btn.right {
+  right: 5px;
+}
+
+.scroll-btn:hover {
+  background: #f0f0f0;
+}
+.scroll-btn {
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.scroll-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+  #filters {
+  display: flex;
+  overflow-x: auto;    
+  white-space: nowrap;
+  gap: 2rem;
+  padding: 1rem 3rem;
+}
+    .filter{
+        flex: 0 0 auto;  
+        margin-top: 2rem;
+        text-align: center;
+        margin-right: 3rem;
+        opacity:0.7;
+        transition: 0.2s;
+    }
+    #filters::-webkit-scrollbar {
+       display: none; /* horizontal scroller nhi show hoga */
+      }
+    .filter p{
+      font-size:0.8rem;
+    }
+    .filter:hover{
+      opacity: 1;
+       transform: scale(1.1);
+      cursor: pointer;
+    }
+    .tax-info{
+      display:none;
+    }
+    .tax-toggle{
+      display: flex;
+      margin-top: 1.5rem;
+      flex: 0 0 auto;
+      margin-left: auto;
+      border: 1px solid rgb(180, 171, 171);
+       justify-content: center;
+      border-radius: 1rem;
+      align-items: center;
+      padding: 0px 1rem 0px 1rem;
+      height:3rem
+        /* font-size:0.8rem; */
+    }
+      /* removing arrow from mobile views */
+       @media (max-width: 768px) {
+       .scroll-btn {
+       display: none;
+        }
+       }
+       a{
+        text-decoration: none;
+       }
+
+</style>
+
+  <div class="filters-wrapper"> 
+
+      <!-- Left Arrow -->
+     <button class="scroll-btn left" onclick="scrollFilters(-300)">
+     <i class="fa-solid fa-chevron-left"></i>
+     </button>
+
+    <div id="filters">
+      <div class="filter">
+        <a href="/listings/category/Trending" class="text-decoration-none text-dark"> 
+       <i class="fa-solid fa-fire "></i>
+       <b><p>Trending</p></b>
+       </a>
+     </div>
+      
+       <div class="filter">
+        <a href="/listings/category/Rooms" class="text-decoration-none text-dark"> 
+         <i class="fa-solid fa-bed icon"></i>
+         <b><p>Rooms</p></b>
+         </a>
+     </div>
+      <div class="filter">
+        <a href="/listings/category/Iconic Cities" class="text-decoration-none text-dark"> 
+        <i class="fa-solid fa-mountain-city "></i>
+         <b><p>Iconic Cities</p></b>
+         </a>
+      </div>
+        <div class="filter">
+          <a href="/listings/category/Castles" class="text-decoration-none text-dark"> 
+          <i class="fa-brands fa-fort-awesome"></i>
+          <b><p>Castles</p></b>
+         </a>
+      </div>
+        <div class="filter">
+          <a href="/listings/category/Amazing Pools" class="text-decoration-none text-dark"> 
+           <i class="fa-solid fa-person-swimming"></i>
+          <b><p>Amazing Pools</p></b>
+          </a>
+      </div>
+        <div class="filter">
+          <a href="/listings/category/Farms" class="text-decoration-none text-dark"> 
+          <i class="fa-solid fa-cow"></i>
+          <b><p>Farms</p></b>
+          </a>
+      </div>
+        <div class="filter">
+          <a href="/listings/category/Arctic" class="text-decoration-none text-dark"> 
+          <i class="fa-solid fa-snowflake"></i>
+          <b><p>Arctic</p></b>
+          </a>
+      </div>
+       <div class="filter">
+        <a href="/listings/category/Homes" class="text-decoration-none text-dark"> 
+       <i class="fa-solid fa-house"></i>
+         <b><p>Homes</p></b>
+        </a>
+      </div>
+       <div class="filter">
+        <a href="/listings/category/Bed & breakfasts" class="text-decoration-none text-dark"> 
+          <i class="fa-solid fa-mug-hot"></i>
+          <b><p>Bed & breakfasts</p></b>
+        </a>
+      </div>
+      <div class="filter">
+        <a href="/listings/category/Boats" class="text-decoration-none text-dark"> 
+        <i class="fa-solid fa-sailboat"></i>
+         <b><p>Boats</p></b>
+        </a>
+      </div>
+      <div class="tax-toggle">
+         <div class="form-check-reverse form-switch">
+          <input class="form-check-input" 
+           type="checkbox" 
+           role="switch"
+           id="switchCheckDefault">
+          <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+          </div>
+        </div>
+    </div>
+
+    <!-- Right Arrow -->
+    <button class="scroll-btn right" onclick="scrollFilters(300)">
+    <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+  </div>
+
+ <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+   
+<% if(allListings.length === 0){ %>
+
+  <div class="text-center mt-5">
+      <h3>No Listings Found 😢</h3>
+      <p>Try searching another location</p>
+      <a href="/listings" class="btn btn-dark mt-3">Explore All Listings</a>
+  </div>
+
+  
+<% } else { %>
+
+  <%for(let listing of allListings){%>
+    <a href="/listings/<%=listing._id %>" class="link"> 
+   <div class="card col card-listing  "  >
+    <img src="<%=listing.image.url%>" class="card-img-top" alt="listing_image" style="height: 20rem ;">
+     <div class="card-img-overlay"></div>
+     <div class="card-body">
+    <p class="card-text">
+      <b><%=listing.title%></b> 
+      <br>
+      &#8377;<%= Number(listing.price || 0).toLocaleString("en-IN") %>/night
+       <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
+    </p>
+  </div>
+</div>
+</a>
+ <% } %>
+<% } %>
+ 
+ </div>
+
+ 
+ <script>
+  let taxSwitch=document.getElementById("switchCheckDefault");
+  taxSwitch.addEventListener("click",()=>{
+  let taxInfo=document.getElementsByClassName("tax-info");
+  for(info of taxInfo){
+    if(info.style.display!="inline"){
+       info.style.display="inline"
+    }else{
+       info.style.display="none"
+    }}
+  })
+
+  function scrollFilters(value) {
+  const container = document.getElementById("filters");
+  container.scrollBy({
+    left: value,
+    behavior: "smooth"
+  });
+}
+
+// slider logic
+
+const container = document.getElementById("filters");
+const leftBtn = document.querySelector(".scroll-btn.left");
+const rightBtn = document.querySelector(".scroll-btn.right");
+
+// check visibility
+function updateArrows() {
+  const scrollLeft = container.scrollLeft;
+  const maxScroll = container.scrollWidth - container.clientWidth;
+
+  // LEFT arrow
+  if (scrollLeft > 0) {
+    leftBtn.classList.add("show");
+  } else {
+    leftBtn.classList.remove("show");
+  }
+
+  // RIGHT arrow
+  if (scrollLeft < maxScroll - 5) {
+    rightBtn.classList.add("show");
+  } else {
+    rightBtn.classList.remove("show");
+  }
+}
+
+// scroll function
+function scrollFilters(value) {
+  container.scrollBy({
+    left: value,
+    behavior: "smooth"
+  });
+}
+
+// event listeners
+container.addEventListener("scroll", updateArrows);
+window.addEventListener("load", updateArrows);
+ </script>
+
+  
+
+
+   
+    
+
+ 
+ 
+
+
+
+
+<!-- <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+    <% for(let listing of allListings) { %>
+    <a href="/listings/<%=listing._id%>" class="listing-link">
+    <div class="card col">
+    <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image"  style="height: 20rem"/>
+    <div class="card-img-overlay">..</div>
+    <div class="card-body">
+        <p class="card-text">
+            <%= listing.title %> <br />
+            &#8377;<%= listing.price.toLocaleString("en-IN")%> /night
+        </p>
+    </div>
+    </div>
+    </a>
+    <% } %>
+</div> -->
+
+
+    
+
+
+
+
+    

@@ -1,0 +1,148 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  body {
+    background: rgba(0,0,0,0.4);
+  }
+
+  .otp-card {
+    width: 420px;
+    padding: 30px;
+    border-radius: 10px;
+    background: #fff;
+    margin: auto;
+    margin-top: 100px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .otp-input {
+    width: 100%;
+    height: 45px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .otp-btn {
+    background-color: #5aa0e6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+
+  .otp-btn:hover {
+    background-color: #3b82f6;
+  }
+
+  .back-btn {
+    display: inline-block;
+    margin-top: 10px;
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .back-btn:hover {
+    text-decoration: underline;
+    color: #000;
+  }
+
+  .success-text {
+    color: green;
+    margin-top: 15px;
+  }
+
+  .timer-text {
+    color: #17a2b8;
+    margin-top: 10px;
+  }
+
+  .error-text {
+    color: red;
+    margin-top: 10px;
+  }
+
+  .resend-btn {
+    margin-top: 10px;
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .resend-btn:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="otp-card">
+
+  <h4>Enter OTP</h4>
+
+  <form action="/verify-otp" method="POST">
+    <input type="hidden" name="email" value="<%= email %>">
+
+    <input type="text" name="otp" class="otp-input" placeholder="Enter OTP" required>
+
+    <button class="otp-btn">Validate OTP</button>
+  </form>
+
+  <!-- Back Button -->
+  <a href="/signup" class="back-btn">← Back to Signup</a>
+
+  <!-- Masked Email -->
+  <p class="success-text">
+    OTP sent to 
+    <%= email ? email.replace(/(.{2}).+(@.+)/, "$1******$2") : "" %>
+  </p>
+
+  <!-- Timer -->
+  <p class="timer-text">
+    OTP expires in: <span id="timer">01:00</span>
+  </p>
+
+  <!-- 🔥 RESEND BUTTON (HIDDEN INITIALLY) -->
+  <form action="/resend-otp" method="POST" id="resendForm" style="display:none;">
+    <input type="hidden" name="email" value="<%= email %>">
+    <button type="submit" class="resend-btn">Resend OTP</button>
+  </form>
+
+  <!-- Error -->
+  <% if(error && error.length > 0){ %>
+    <p class="error-text"><%= error %></p>
+  <% } %>
+
+</div>
+
+<script>
+  let time = 60; // 1 minutes
+
+  const timerElement = document.getElementById("timer");
+  const resendForm = document.getElementById("resendForm");
+
+  const countdown = setInterval(() => {
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    timerElement.innerText = minutes + ":" + seconds;
+
+    time--;
+
+    if (time < 0) {
+      clearInterval(countdown);
+      timerElement.innerText = "Expired";
+
+      // 🔥 SHOW RESEND BUTTON
+      resendForm.style.display = "block";
+    }
+  }, 1000);
+</script>
