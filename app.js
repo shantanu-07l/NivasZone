@@ -113,6 +113,10 @@ app.use("/bookings", bookingRouter);
 app.use("/payments", paymentsRouter);
 app.use("/profile",profileRouter);
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 //wrong route
 app.use((req,res,next) =>{
   res.status(404).send("Page Not Found!");
