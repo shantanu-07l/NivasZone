@@ -148,13 +148,13 @@
       <!-- MAP SECTION -->
      <div class="col-8 offset-3 mb-3">
       <h3>Where you'll be</h3>
-      <div id="map" style="height: 400px street-v12"></div>
+      <div id="map" style="height: 400px;"></div>
      </div>
   </div>
 
 
 <script>
-    const mapToken="<%= process.env.MAP_TOKEN %>";
+    const mapToken="<%= mapToken %>";
     const coordinates = <%- JSON.stringify(listing.geometry?.coordinates || [73.810082, 18.660492]) %>;
     const listing=<%-JSON.stringify(listing)%>;
 </script>

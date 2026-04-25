@@ -26,7 +26,7 @@ module.exports.showListings=async (req, res) => {
     req.flash("error","Listing you requested does not exist !");
     return res.redirect("/listings");
   }
-  res.render("listings/show", { listing });
+  res.render("listings/show", { listing ,mapToken: process.env.MAPBOX_TOKEN});
 };
 
 module.exports.createListing=async (req, res) => {
