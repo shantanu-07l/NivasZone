@@ -5,6 +5,7 @@ if(process.env.NODE_ENV!="production"){
 
 const express = require("express");
 const app = express();
+app.set("trust proxy", 1);
 const mongoose = require("mongoose");
 
 
@@ -75,15 +76,17 @@ store.on("error", (err) => {
   console.log("ERROR in Mongo Session Store:", err);
 });
 
-const sessionOptions={
+const sessionOptions = {
   store,
   secret: process.env.SESSION_SECRET,
-  resave:false,
-  saveUninitialized:false,
-  cookie:{
-    expires:Date.now()+7*24*60*60*1000,
-    maxAge:7 * 24 * 60 * 60 * 1000,
-    httpOnly:true,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
   },
 };
 

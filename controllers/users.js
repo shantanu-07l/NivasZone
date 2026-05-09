@@ -32,8 +32,17 @@ module.exports.signup=async(req,res) => {
         req.session.otpExpiry = Date.now() + 60 * 1000;
 
         await sendOTP(email, otp);
-
+        req.session.save((err) => {
+            if (err) {
+                console.log(err);
+            }
         res.render("users/verify-otp.ejs", { email });
+    });
+    }catch(e){
+        req.flash("error",e.message);
+        res.redirect("/signup");
+    }     
+};
         // let{username,email,password}=req.body;
         // const newUser=new User({email,username});
         // const registeredUser=await User.register(newUser,password);
@@ -45,11 +54,6 @@ module.exports.signup=async(req,res) => {
         //     req.flash("success","Welcome to Wanderlust !");
         //     res.redirect("/listings");
         // });
-    }catch(e){
-        req.flash("error",e.message);
-        res.redirect("/signup");
-    }
-};
 module.exports.resendOTP = async (req, res) => {
     try {
         const email = req.session.tempUser.email;
