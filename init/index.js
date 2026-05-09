@@ -1,7 +1,13 @@
+// Load environment variables
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config({ path: "../.env" });
+}
+
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
 
+// Categories
 const categories = [
   "Trending",
   "Rooms",
@@ -12,35 +18,56 @@ const categories = [
   "Arctic",
   "Homes",
   "Bed & breakfasts",
-  "Boats"
+  "Boats",
 ];
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+// MongoDB URL
+const MONGO_URL = process.env.ATLASDB_URL;
 
-main()
-  .then(() => {
-    console.log("connected to DB");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
+// Connect to DB
 async function main() {
+  if (!MONGO_URL) {
+    throw new Error("❌ ATLASDB_URL is undefined. Check your .env file.");
+  }
+
   await mongoose.connect(MONGO_URL);
+  console.log("✅ Connected to DB");
 }
 
+// Initialize Database
 const initDB = async () => {
-  initData.data=initData.data.map((obj)=>({
-    ...obj,owner:"69cf924868a1345c3b49876f",
-    geometry: {
-    type: "Point",
-    coordinates: [77.2090, 28.6139], // default (Delhi)
-    },
-    category: categories[Math.floor(Math.random() * categories.length)],
-  }));
-  await Listing.deleteMany({});
-  await Listing.insertMany(initData.data);
-  console.log("data was initialized");
+  try {
+    // Prepare data
+    const updatedData = initData.data.map((obj) => ({
+      ...obj,
+      owner: new mongoose.Types.ObjectId(), // temporary valid ObjectId
+      geometry: {
+        type: "Point",
+        coordinates: [77.2090, 28.6139], // default Delhi
+      },
+      category:
+        categories[Math.floor(Math.random() * categories.length)],
+    }));
+
+    // Clear old data
+    await Listing.deleteMany({});
+    console.log("🗑️ Old data deleted");
+
+    // Insert new data
+    await Listing.insertMany(updatedData);
+    console.log("✅ Data initialized successfully");
+
+    mongoose.connection.close(); // close connection after insert
+  } catch (err) {
+    console.log("❌ Error inserting data:", err);
+  }
 };
 
-initDB();
+// Run properly (IMPORTANT)
+main()
+  .then(() => {
+    initDB(); // run only after DB connects
+  })
+  .catch((err) => {
+    console.log("❌ DB Connection Error:", err);
+  });
