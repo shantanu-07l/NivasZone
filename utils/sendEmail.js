@@ -1,27 +1,38 @@
 require("dotenv").config();
 
-const nodemailer = require("nodemailer");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-        user: process.env.USER_EMAIL,
-        pass: process.env.USER_PASS,
-    }
-});
+const defaultClient = SibApiV3Sdk.ApiClient.instance;
+
+const apiKey = defaultClient.authentications["api-key"];
+
+apiKey.apiKey = process.env.BREVO_API_KEY;
+
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 module.exports.sendOTP = async (email, otp) => {
 
     try {
 
-        await transporter.sendMail({
-            from: process.env.USER_EMAIL,
-            to: email,
+        const sendSmtpEmail = {
+
+            sender: {
+                email: "nutannmiet@gmail.com",
+                name: "NivasZone"
+            },
+
+            to: [
+                {
+                    email: email
+                }
+            ],
+
             subject: "OTP Verification",
-            text: `Your OTP is ${otp}`
-        });
+
+            htmlContent: `<h2>Your OTP is ${otp}</h2>`
+        };
+
+        await apiInstance.sendTransacEmail(sendSmtpEmail);
 
         console.log("✅ OTP Email Sent");
 
