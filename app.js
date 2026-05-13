@@ -85,10 +85,15 @@ const sessionOptions = {
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
   },
 };
+// ONLY for production/deployment
+if(process.env.NODE_ENV === "production"){
+  app.set("trust proxy", 1);
+
+  sessionOptions.cookie.secure = true;
+  sessionOptions.cookie.sameSite = "none";
+}
 
 
 app.use(session(sessionOptions));

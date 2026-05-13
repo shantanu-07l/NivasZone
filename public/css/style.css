@@ -11,6 +11,38 @@ body{
 .navbar{
     height: 5rem;
     background-color: white;
+    padding: 0 2rem;
+}
+
+/* move logo section slightly right */
+.brand-section{
+    margin-left: 1.5rem;
+}
+
+/* logo image */
+.navbar-logo{
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* project name */
+.brand-name{
+    margin-left: 10px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: black;
+}
+
+/* navbar links */
+.nav-link{
+    color: black !important;
+}
+
+/* navbar
+.navbar{
+    height: 5rem;
+    background-color: white;
 }
 .fa-compass{
     background-color: pink;
@@ -19,7 +51,7 @@ body{
 
 .nav-link{
     color: black !important;
-}
+} */
 
 /* footer */
 
